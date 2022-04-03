@@ -1,0 +1,60 @@
+name: wwR
+source code: |
+  input: ' '
+  blank: ' '
+  start state: start
+  table:
+    start:
+      a: {write: A, R: nakoniec_a}
+      b: {write: B, R: nakoniec_b}
+      B: {L: kontrola_1}
+      A: {L: kontrola_1}
+      ' ': {L: done}
+    
+    nakoniec_a:
+      a: R
+      b: R
+      [A,B,' ']: {L: check_a}
+      
+      
+    check_a:
+      a: {write: A, L: nazaciatok}
+    
+    nakoniec_b:
+      a: R
+      b: R
+      [A,B,' ']: {L: check_b}
+         
+    check_b:
+      b: {write: B, L: nazaciatok}
+    
+    nazaciatok:
+      A: {R: start}
+      B: {R: start}
+      a: L
+      b: L
+      
+    
+    kontrola_1:
+      A: L
+      B: L
+      ' ': {R: kontrola_cela}
+      
+    
+    kontrola_cela:
+      A: R
+      B: R
+      ' ': {R: done}
+      
+    done:
+    
+positions:
+  start: {x: 460.11, y: 191.83}
+  nakoniec_a: {x: 403.22, y: 334.09, fixed: false}
+  check_a: {x: 264.4, y: 370.37, fixed: false}
+  nakoniec_b: {x: 311.51, y: 185.74, fixed: false}
+  check_b: {x: 309.93, y: 69.69}
+  nazaciatok: {x: 316.19, y: 234.82, fixed: false}
+  kontrola_1: {x: 523.02, y: 313.83, fixed: false}
+  kontrola_cela: {x: 579.72, y: 167.36, fixed: false}
+  done: {x: 575.9, y: 297.68, fixed: false}
