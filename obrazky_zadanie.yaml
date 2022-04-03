@@ -1,0 +1,157 @@
+name: obrazky_zadanie
+source code: |
+  input: '100_110_111_H$'
+  blank: ' '
+  start state: start
+  table:
+    start:
+      1: {write: J, R}
+      0: {write: N, R}
+      _ : {write: P, R}
+      S: {L: nazaciatok_S}
+      I: {L: nazaciatok_I}
+      H: {L: nazaciatok_H}
+      
+    nazaciatok_I:
+      [J,N,_,$,P,1,0,I]: L
+      _: {write: P, R}
+      ' ': {R: ziskaj_prvok}
+    zaciatok_I:
+      [J,N,P,_,$,I]: L
+      [0,1]: {R: ziskaj_prvok}
+    ziskaj_prvok:
+      _: R
+      J: {write: 1, R: prepis_nuly_I}
+      N: {write: 0, R: prepis_jednotky_I}
+      P: {write: _, R: prepis_podtrznika_I}
+      I: {R: prepis_outputu}
+    prepis_outputu:
+      $: R
+      _: R
+      N: {write: 0, R}
+      J: {write: 1, R}
+      ' ': {L: done}
+    prepis_jednotky_I:
+      [0,1,J,N,$,I,P,_]: R
+      ' ': {write: J, L: zaciatok_I}
+    prepis_nuly_I:
+      [0,1,J,N,$,I,P,_]: R
+      ' ': {write: N, L: zaciatok_I}
+    prepis_podtrznika_I:
+      [0,1,J,N,$,I,P,_]: R
+      ' ': {write: _, L: zaciatok_I}
+      
+    nazaciatok_S:
+      [J,N,$,P,1,0,S]: L
+      _: {write: P, L}
+      ' ': {R: kopirovanie_S}
+    kopirovanie_S:
+      [1,0]: R
+      J: {write: 1, R: prepis_jednotky_S}
+      N: {write: 0, R: prepis_nuly_S}
+      P: {write: _ , R}
+      ' ': {L: done}
+      S: {R: prepis_podtrzniku_S}
+      $: R
+    prepis_jednotky_S:
+      [J,N,$,1,0,_,S,P]: R
+      ' ': {write: 1,L: prvok_S}
+    prvok_S:  
+      [J,N,$,1,0,S,P]: L
+      [' ',_] : {R: hladaj_P_S}
+    hladaj_P_S:
+      [J,N,$,1,0,S,_]: R
+      P: {write: _, R: kopirovanie_S}
+    prepis_nuly_S:
+      [J,N,$,1,0,_,S,P]: R
+      ' ': {write: 0,L: prvok_S}
+    prepis_podtrzniku_S: 
+      [S,$,1,0,_,P]: R
+      ' ': {write: P,L: kontrola_S}
+    kontrola_S:
+      [0,1,P,$,S]: L
+      _: {write: P, L}
+      [J,N]: {L: nazaciatok_S}
+      ' ': {R: vymaz_posledny_podtrznik}
+    vymaz_posledny_podtrznik:
+      [J,N,$,1,0,_,S,I]: R
+      P: {write: _, R}
+      ' ': {L: done}
+    
+    nazaciatok_H:
+      P: {write: M,L: nova_cast_slova}
+    
+    cast_slova:
+      [J,N,,H,$,M,P,1,0]: L
+      [_,' ']: {R: zisti_prvok}
+
+    zisti_prvok:
+      [1,0] : R
+      J: {write: 1, R: prepis_jednotky_H}
+      N: {write: 0, R: prepis_nuly_H}
+      [P,M]: {L: najdi_aktualny_podtrznik}
+      
+    prepis_jednotky_H:
+      [J,P,H,$,M,_,N,1,0]: R
+      ' ': {write: 1, L: cast_slova}
+      
+    prepis_nuly_H:
+      [J,P,H,$,M,_,1,0,N]: R
+      ' ': {write: 0, L: cast_slova}
+      
+    najdi_aktualny_podtrznik:
+      [J,N,1,0]: L
+      _: {R: prepis_podtrznik_H}
+      ' ': {R: prepis_pismenok}
+
+    prepis_podtrznik_H:
+      [J,P,H,$,M,N,1,0]: R
+      ' ': {write: P, L: posun_na_dalsiu_cast_slova}
+    
+    posun_na_dalsiu_cast_slova:
+      [J,N,H,$,1,0,M,_,P]: L
+      _: {write: P, L: nova_cast_slova}
+    
+    nova_cast_slova:
+      [J,N,M,P,1,0]: L
+      P: {write: _, R: zisti_prvok}
+      ' ': {R: zisti_prvok}
+    
+    prepis_pismenok:
+      [0,1,H,$]: R
+      [M,P]: {write: _, R}
+      ' ': {L: done}
+      
+    done:
+      _: {write: ' ', L}
+    
+      
+positions:
+  start: {x: 418.35, y: 101.2}
+  nazaciatok_I: {x: 538.98, y: 140.29}
+  zaciatok_I: {x: 696.51, y: 390.93}
+  ziskaj_prvok: {x: 704.96, y: 381.12}
+  prepis_outputu: {x: 621.43, y: 249.16}
+  prepis_jednotky_I: {x: 718.14, y: 385.42}
+  prepis_nuly_I: {x: 690.93, y: 387.25}
+  prepis_podtrznika_I: {x: 707.3, y: 398.27}
+  nazaciatok_S: {x: 327.44, y: 152.57}
+  kopirovanie_S: {x: 79.69, y: 457.63}
+  prepis_jednotky_S: {x: 54.59, y: 443.3}
+  prvok_S: {x: 71.08, y: 467.15}
+  hladaj_P_S: {x: 66.92, y: 467.49}
+  prepis_nuly_S: {x: 20, y: 480, fixed: false}
+  prepis_podtrzniku_S: {x: 117.38, y: 440.45}
+  kontrola_S: {x: 113.83, y: 478.37}
+  vymaz_posledny_podtrznik: {x: 144.56, y: 454.15}
+  nazaciatok_H: {x: 453.51, y: 246.12}
+  cast_slova: {x: 532.05, y: 353.38, fixed: false}
+  zisti_prvok: {x: 471.31, y: 480}
+  prepis_jednotky_H: {x: 586.96, y: 480, fixed: false}
+  prepis_nuly_H: {x: 619.64, y: 480, fixed: false}
+  najdi_aktualny_podtrznik: {x: 94.4, y: 253.48}
+  prepis_podtrznik_H: {x: 139.21, y: 106.91, fixed: false}
+  posun_na_dalsiu_cast_slova: {x: 252.22, y: 227.32, fixed: false}
+  nova_cast_slova: {x: 361.93, y: 358.75, fixed: false}
+  prepis_pismenok: {x: 225.73, y: 145.28, fixed: false}
+  done: {x: 381.8, y: 211.59}
