@@ -1,0 +1,81 @@
+name: ww
+source code: |
+  input: 'abbabb'
+  blank: ' '
+  start state: start
+  table:
+    start:
+      ' ': {L: done}
+      a: {write: X, R: nakoniec}
+      b: {write: Y , R: nakoniec}
+    prepis_prvapolka:
+      a: {write: X, R: nakoniec}
+      b: {write: Y , R: nakoniec}
+      [A,B]: {L: uplny_zaciatok_a_kontrola}
+      
+    uplny_zaciatok_a_kontrola:
+      [A,B,X,Y]: {L}
+      ' ': {R: kontrola_rovnakosti}
+
+    nakoniec:
+      a: R
+      b: R
+      [A,B,' ']: {L: prepis_druhapolka}
+    
+    prepis_druhapolka:
+      a: {write: A, L: nazaciatok}
+      b: {write: B, L: nazaciatok}
+      [X,Y]: {L: reject}
+      
+
+    nazaciatok:
+      a: L
+      b: L
+      [X,Y]: {R: prepis_prvapolka}
+      
+    kontrola_rovnakosti:
+      [a,b]: R
+      X: {write: a, R: kontrola_A}
+      Y: {write: b, R: kontrola_B}
+      A: R
+      B: R
+      ' ': {L: kontrola_retazca}
+      
+    kontrola_A:
+      [X,Y,a,b]: R
+      A: {write: a, L: novy_zaciatok}
+      B: {R: reject}
+      
+    kontrola_B:
+        [X,Y,a,b]: R
+        A: {R: reject}
+        B: {write: b, L: novy_zaciatok}
+
+    novy_zaciatok:
+        [X,Y,A,B,a,b]: L
+        ' ': {R: kontrola_rovnakosti}
+        
+    
+    kontrola_retazca:
+      [a,b]: L
+      ' ': {R: done}
+      
+    done:
+      
+    reject:
+      
+      
+positions:
+  start: {x: 436.05, y: 397.45, fixed: false}
+  prepis_prvapolka: {x: 370.32, y: 341.03}
+  uplny_zaciatok_a_kontrola: {x: 185.94, y: 348.53}
+  nakoniec: {x: 623, y: 343.86}
+  prepis_druhapolka: {x: 611.08, y: 47.65}
+  nazaciatok: {x: 518.65, y: 230.34}
+  kontrola_rovnakosti: {x: 172.43, y: 187.11}
+  kontrola_A: {x: 181.08, y: 28.51}
+  kontrola_B: {x: 354.6, y: 172.35}
+  novy_zaciatok: {x: 264.4, y: 101.94}
+  kontrola_retazca: {x: 89.63, y: 421.59}
+  done: {x: 206.91, y: 422.84}
+  reject: {x: 409.16, y: 20}
