@@ -1,0 +1,474 @@
+source code: |-
+  input: '--/---/.-./..././-.-./---/-.././.--.-./-/--../..$'
+  blank: ' '
+  start state: start
+  table:
+    start:
+      .: {write: B, R}
+      /: {write: m, R}
+      -: {write: C, R}
+      $: {L: nazaciatok}
+      
+    nazaciatok:
+      [A,B,C,D,E,F,G,H,I,J,K,L,M,N,O,P,Q,R,S,T,U,V,W,X,Y,Z,'@',1,2,3,4,5,6,7,8,9,m,$]: L
+      [' ', /]: {R: citaj}
+      ['.','-']: {L: done
+      }
+    
+    citaj:
+      #.
+      B: {write: '.',R: mozno_A_E_F_H_I_J_L_P_R_S_U_V_W_1_2_3_4_5_@}
+      #-
+      C: {write: '-', R: mozno_B_C_D_G_M_N_O_Q_T_X_Y_Z_6_7_8_9_0}
+      
+      
+      
+    mozno_A_E_F_H_I_J_L_P_R_S_U_V_W_1_2_3_4_5_@:
+      #..
+      m: {write: '/', R: prepis_E}
+      #...
+      B: {write: '.' , R: mozno_F_H_I_S_U_V_2_3_4_5}
+      #..-
+      C: {write: '-', R: mozno_A_J_L_P_R_W_1_@}
+
+      
+    mozno_A_J_L_P_R_W_1_@:
+      #.-
+      m: {write: /,R: prepis_A}
+      #.-.
+      B: {write: ., R: mozno_L_R}
+      #.--
+      C: {write: '-', R: mozno_P_J_W_1_@}
+      
+    mozno_L_R:
+      #.-.
+      m: {write: /, R: prepis_R}
+      B: {write: ., R: musi_L}
+      
+      
+    musi_L:
+      m: {write: /, R: prepis_L}
+      
+    reject:
+
+    mozno_P_J_W_1_@:
+      #.--
+      m: {write: /, R: prepis_W}
+      #.--. P
+      B: {write: ., R: mozno_p_@}
+      # .---
+      C: {write: '-', R: mozno_J_1}
+      
+      
+    mozno_p_@:
+      m: {write: /, R: prepis_P}
+      C: {write: '-', R: musi_@}
+      
+      
+    musi_@: 
+      B: {write: ., R: musi_@_zas}
+      
+    musi_@_zas:
+      m: {write: /, R: prepis_@}
+      
+    mozno_J_1:
+      #.---
+      m: {write: /, R: prepis_J}
+      #.---.
+      B: {R: reject}
+      #.----
+      C: {write: '-', R: musi_1}
+    
+    musi_1:
+      m: {write: '/', R: prepis_1}
+      
+      
+    mozno_B_C_D_G_M_N_O_Q_T_X_Y_Z_6_7_8_9_0:
+      #-
+      m: {write: /, R: prepis_T}
+      #-.
+      B: {write: ., R: mozno_B_C_D_K_N_X_Y_6}
+      #--
+      C: {write: '-', R: mozno_G_M_O_Q_Z_7_8_9_0}
+      
+    mozno_G_M_O_Q_Z_7_8_9_0:
+      #--
+      m: {write: /, R: prepis_M}
+      #--.
+      B: {write: ., R: mozno_G_Q_Z_7}
+      #---
+      C: {write: '-', R: mozno_O_8_9_0}
+      
+      
+    mozno_O_8_9_0:
+      #---
+      m: {write: /, R: prepis_O}
+      #---.
+      B: {write: ., R: musi_8}
+      #----
+      C: {write: '-', R: mozno_9_0}
+      
+    mozno_9_0:
+      #----
+      B: {write: ., R: musi_9}
+      C: {write: '-', R: musi_0}
+      
+    musi_0:
+      m: {write: /, R: prepis_0}
+      
+    musi_9:
+      m: {write: /, R: prepis_9}
+      
+    musi_8:
+      #---..
+      B: {write: ., R: musi_8_zas}
+    
+    musi_8_zas:
+      m: {write: /, R: prepis_8}
+      
+      
+      
+    mozno_G_Q_Z_7:
+     #--.
+     m: {write: /, R: prepis_G}
+     #--..
+     B: {write: ., R: mozno_Z_7}
+     #--.-
+     C: {write: '-', R: musi_Q}
+    
+    musi_Q:
+      m: {write: /, R: prepis_Q}
+      
+    
+     
+    mozno_Z_7:
+      #--..
+      m: {write: /, R: prepis_Z}
+      #--...
+      B: {write: /, R: musi_7}
+      #--..-
+      C: {R: reject}
+    
+    musi_7:
+      m: {write: /, R: prepis_Z}
+     
+     
+     
+     
+      
+    mozno_B_C_D_K_N_X_Y_6:
+      #-.
+      m: {write: /, R: prepis_N}
+      #-..
+      B: {write: ., R: mozno_B_D_X_6}
+      #-.-
+      C: {write: '-', R: mozno_C_K_Y}
+      
+    mozno_C_K_Y:
+      #-.-
+      m: {write: /, R: prepis_K}
+      #-.-.
+      B: {write: ., R: musi_C}
+      #-.--
+      C: {write: '-', R: musi_Y}
+    
+    musi_C:
+      m: {write: /, R: prepis_C}
+    musi_Y:
+      m: {write: /, R: prepis_Y}
+    mozno_B_D_X_6:
+      #-..
+      m: {write: /, R: prepis_D}
+      #-...
+      B: {write: ., R: mozno_B_6}
+      #-..-
+      C: {write: '-', R: musi_X}
+      
+    mozno_B_6:
+      #-...
+      m: {write: /, R: prepis_B}
+      #-....
+      B: {write: ., R: prepis_6}
+      
+    musi_X:
+      m: {write: /, R: prepis_X}
+      
+    mozno_G_M_O_Q_Z:
+      C: {write: '-', R: musi_O}
+      
+    musi_O:
+      m: {write: /,R: prepis_O}
+
+    
+    mozno_F_H_I_S_U_V_2_3_4_5:
+      # ..
+      $: {R: prepis_I}
+      
+      B: {write: '.' , R: mozno_H_S_V_3_4_5}
+      C: {write: '-', R: mozno_F_U_2}
+      m: {write: /, R: prepis_I}
+      
+    mozno_F_U_2:
+      #..-
+      B: {write: '.', R: musi_F}
+      C: {write: '-', R: musi_2}
+      m: {write: /, R: prepis_U}
+      
+    musi_2:
+      C: {write: '-', R: musi_2_C}
+    
+    musi_2_C:
+      m: {write: /, R: prepis_2}
+      
+    musi_F:
+      m: {write: /, R: prepis_F}
+    
+    mozno_H_S_V_3_4_5:
+      #...
+      B: {write: '.', R: mozno_H_4_5}
+      C: {write: '-', R: mozno_V_3}
+      m: {write: /, R: prepis_S}
+      $: {R: prepis_S}
+    
+    mozno_V_3:
+      #...-
+      B: {R: reject}
+      C: {write: '-', R: prepis_3}
+      m: {write: /, R: prepis_V}
+      
+    mozno_H_4_5:
+      #....
+      B: {write: ., R: musi_5}
+      C: {write: '-', R: musi_4}
+      m: {write: /, R: prepis_H}
+    
+    
+    musi_5:
+      m: {write: /, R: prepis_5}
+      
+    musi_4:
+      m: {write: /, R: prepis_4}
+      
+    
+    prepis_A:
+      [A,B,C,D,E,F,G,H,I,J,K,L,M,N,O,P,Q,R,S,T,U,V,W,X,Y,Z,'@',m,$,'.','-',/]:   R
+      ' ': {write: A, L: nazaciatok}
+      
+    prepis_B:
+      [A,B,C,D,E,F,G,H,I,J,K,L,M,N,O,P,Q,R,S,T,U,V,W,X,Y,Z,'@',1,2,3,4,5,6,7,8,9,m,$,'.','-',/]: R
+      ' ': {write: B, L: nazaciatok}
+      
+    prepis_C:
+      [A,B,C,D,E,F,G,H,I,J,K,L,M,N,O,P,Q,R,S,T,U,V,W,X,Y,Z,'@',1,2,3,4,5,6,7,8,9,m,$,'.','-',/]: R
+      ' ': {write: C, L: nazaciatok}
+      
+    prepis_D:
+      [A,B,C,D,E,F,G,H,I,J,K,L,M,N,O,P,Q,R,S,T,U,V,W,X,Y,Z,'@',1,2,3,4,5,6,7,8,9,m,$,'.','-',/]: R
+      ' ': {write: D, L: nazaciatok}
+      
+    prepis_E:
+      [A,B,C,D,E,F,G,H,I,J,K,L,M,N,O,P,Q,R,S,T,U,V,W,X,Y,Z,'@',1,2,3,4,5,6,7,8,9,m,$,'.','-',/]: R
+      ' ': {write: E, L: nazaciatok}
+      
+    prepis_F:
+      [A,B,C,D,E,F,G,H,I,J,K,L,M,N,O,P,Q,R,S,T,U,V,W,X,Y,Z,'@',1,2,3,4,5,6,7,8,9,m,$,'.','-',/]: R
+      ' ': {write: F, L: nazaciatok}
+      
+    prepis_G:
+      [A,B,C,D,E,F,G,H,I,J,K,L,M,N,O,P,Q,R,S,T,U,V,W,X,Y,Z,'@',1,2,3,4,5,6,7,8,9,m,$,'.','-',/]: R
+      ' ': {write: G, L: nazaciatok}
+      
+    prepis_H:
+      [A,B,C,D,E,F,G,H,I,J,K,L,M,N,O,P,Q,R,S,T,U,V,W,X,Y,Z,'@',1,2,3,4,5,6,7,8,9,m,$,'.','-',/]: R
+      ' ': {write: H, L: nazaciatok}
+      
+    prepis_I:
+      [A,B,C,D,E,F,G,H,I,J,K,L,M,N,O,P,Q,R,S,T,U,V,W,X,Y,Z,'@',1,2,3,4,5,6,7,8,9,m,$,'.','-',/]: R
+      ' ': {write: I, L: nazaciatok}
+      
+    prepis_J:
+      [A,B,C,D,E,F,G,H,I,J,K,L,M,N,O,P,Q,R,S,T,U,V,W,X,Y,Z,'@',1,2,3,4,5,6,7,8,9,m,$,'.','-',/]: R
+      ' ': {write: J, L: nazaciatok}
+      
+    prepis_K:
+      [A,B,C,D,E,F,G,H,I,J,K,L,M,N,O,P,Q,R,S,T,U,V,W,X,Y,Z,'@',1,2,3,4,5,6,7,8,9,m,$,'.','-',/]: R
+      ' ': {write: K, L: nazaciatok}
+      
+    prepis_L:
+      [A,B,C,D,E,F,G,H,I,J,K,L,M,N,O,P,Q,R,S,T,U,V,W,X,Y,Z,'@',1,2,3,4,5,6,7,8,9,m,$,'.','-',/]: R
+      ' ': {write: L, L: nazaciatok}
+      
+    prepis_M:
+      [A,B,C,D,E,F,G,H,I,J,K,L,M,N,O,P,Q,R,S,T,U,V,W,X,Y,Z,'@',1,2,3,4,5,6,7,8,9,m,$,'.','-',/]: R
+      ' ': {write: M, L: nazaciatok}
+      
+    prepis_N:
+      [A,B,C,D,E,F,G,H,I,J,K,L,M,N,O,P,Q,R,S,T,U,V,W,X,Y,Z,'@',1,2,3,4,5,6,7,8,9,m,$,'.','-',/]: R
+      ' ': {write: N, L: nazaciatok}
+      
+    prepis_O:
+      [A,B,C,D,E,F,G,H,I,J,K,L,M,N,O,P,Q,R,S,T,U,V,W,X,Y,Z,'@',1,2,3,4,5,6,7,8,9,m,$,'.','-',/]: R
+      ' ': {write: O, L: nazaciatok}
+      
+    prepis_P:
+      [A,B,C,D,E,F,G,H,I,J,K,L,M,N,O,P,Q,R,S,T,U,V,W,X,Y,Z,'@',1,2,3,4,5,6,7,8,9,m,$,'.','-',/]: R
+      ' ': {write: P, L: nazaciatok}    
+      
+    prepis_Q:
+      [A,B,C,D,E,F,G,H,I,J,K,L,M,N,O,P,Q,R,S,T,U,V,W,X,Y,Z,'@',1,2,3,4,5,6,7,8,9,m,$,'.','-',/]: R
+      ' ': {write: Q, L: nazaciatok}
+    
+    prepis_R:
+      [A,B,C,D,E,F,G,H,I,J,K,L,M,N,O,P,Q,R,S,T,U,V,W,X,Y,Z,'@',1,2,3,4,5,6,7,8,9,m,$,'.','-',/]: R
+      ' ': {write: R, L: nazaciatok}
+    
+    prepis_S:
+      [A,B,C,D,E,F,G,H,I,J,K,L,M,N,O,P,Q,R,S,T,U,V,W,X,Y,Z,'@',1,2,3,4,5,6,7,8,9,m,$,'.','-',/]: R
+      ' ': {write: S, L: nazaciatok}
+      
+    prepis_T:
+      [A,B,C,D,E,F,G,H,I,J,K,L,M,N,O,P,Q,R,S,T,U,V,W,X,Y,Z,'@',1,2,3,4,5,6,7,8,9,m,$,'.','-',/]: R
+      ' ': {write: T, L: nazaciatok}
+      
+    prepis_U:
+      [A,B,C,D,E,F,G,H,I,J,K,L,M,N,O,P,Q,R,S,T,U,V,W,X,Y,Z,'@',1,2,3,4,5,6,7,8,9,m,$,'.','-',/]: R
+      ' ': {write: U, L: nazaciatok}
+    prepis_V:
+      [A,B,C,D,E,F,G,H,I,J,K,L,M,N,O,P,Q,R,S,T,U,V,W,X,Y,Z,'@',1,2,3,4,5,6,7,8,9,m,$,'.','-',/]: R
+      ' ': {write: V, L: nazaciatok}
+    prepis_W:
+      [A,B,C,D,E,F,G,H,I,J,K,L,M,N,O,P,Q,R,S,T,U,V,W,X,Y,Z,'@',1,2,3,4,5,6,7,8,9,m,$,'.','-',/]: R
+      ' ': {write: W, L: nazaciatok}
+    prepis_X:
+      [A,B,C,D,E,F,G,H,I,J,K,L,M,N,O,P,Q,R,S,T,U,V,W,X,Y,Z,'@',1,2,3,4,5,6,7,8,9,m,$,'.','-',/]: R
+      ' ': {write: X, L: nazaciatok}
+    prepis_Y:
+      [A,B,C,D,E,F,G,H,I,J,K,L,M,N,O,P,Q,R,S,T,U,V,W,X,Y,Z,'@',1,2,3,4,5,6,7,8,9,m,$,'.','-',/]: R
+      ' ': {write: Y, L: nazaciatok}
+    prepis_Z:
+      [A,B,C,D,E,F,G,H,I,J,K,L,M,N,O,P,Q,R,S,T,U,V,W,X,Y,Z,'@',1,2,3,4,5,6,7,8,9,m,$,'.','-',/]: R
+      ' ': {write: Z, L: nazaciatok}
+    
+    prepis_@:
+      [A,B,C,D,E,F,G,H,I,J,K,L,M,N,O,P,Q,R,S,T,U,V,W,X,Y,Z,'@',1,2,3,4,5,6,7,8,9,m,$,'.','-',/]: R
+      ' ': {write: '@', L: nazaciatok}
+    prepis_1:
+      [A,B,C,D,E,F,G,H,I,J,K,L,M,N,O,P,Q,R,S,T,U,V,W,X,Y,Z,'@',1,2,3,4,5,6,7,8,9,m,$,'.','-',/]: R
+      ' ': {write: 1, L: nazaciatok}
+    prepis_0:
+      [A,B,C,D,E,F,G,H,I,J,K,L,M,N,O,P,Q,R,S,T,U,V,W,X,Y,Z,'@',1,2,3,4,5,6,7,8,9,m,$,'.','-',/]: R
+      ' ': {write: 0, L: nazaciatok}
+    prepis_2:
+      [A,B,C,D,E,F,G,H,I,J,K,L,M,N,O,P,Q,R,S,T,U,V,W,X,Y,Z,'@',1,2,3,4,5,6,7,8,9,m,$,'.','-',/]: R
+      ' ': {write: 2, L: nazaciatok}
+    prepis_3:
+      [A,B,C,D,E,F,G,H,I,J,K,L,M,N,O,P,Q,R,S,T,U,V,W,X,Y,Z,'@',1,2,3,4,5,6,7,8,9,m,$,'.','-',/]: R
+      ' ': {write: 3, L: nazaciatok}
+    prepis_4:
+      [A,B,C,D,E,F,G,H,I,J,K,L,M,N,O,P,Q,R,S,T,U,V,W,X,Y,Z,'@',1,2,3,4,5,6,7,8,9,m,$,'.','-',/]: R
+      ' ': {write: 4, L: nazaciatok}
+    prepis_5:
+      [A,B,C,D,E,F,G,H,I,J,K,L,M,N,O,P,Q,R,S,T,U,V,W,X,Y,Z,'@',1,2,3,4,5,6,7,8,9,m,$,'.','-',/]: R
+      ' ': {write: 5, L: nazaciatok}
+    prepis_6:
+      [A,B,C,D,E,F,G,H,I,J,K,L,M,N,O,P,Q,R,S,T,U,V,W,X,Y,Z,'@',1,2,3,4,5,6,7,8,9,m,$,'.','-',/]: R
+      ' ': {write: 6, L: nazaciatok}
+    prepis_7:
+      [A,B,C,D,E,F,G,H,I,J,K,L,M,N,O,P,Q,R,S,T,U,V,W,X,Y,Z,'@',1,2,3,4,5,6,7,8,9,m,$,'.','-',/]: R
+      ' ': {write: 7, L: nazaciatok}
+    prepis_8:
+      [A,B,C,D,E,F,G,H,I,J,K,L,M,N,O,P,Q,R,S,T,U,V,W,X,Y,Z,'@',1,2,3,4,5,6,7,8,9,m,$,'.','-',/]: R
+      ' ': {write: 8, L: nazaciatok}
+    prepis_9:
+      [A,B,C,D,E,F,G,H,I,J,K,L,M,N,O,P,Q,R,S,T,U,V,W,X,Y,Z,'@',1,2,3,4,5,6,7,8,9,m,$,'.','-',/]: R
+      ' ': {write: 9, L: nazaciatok}
+    
+    done:
+      [A,B,C,D,E,F,G,H,I,J,K,L,M,N,O,P,Q,R,S,T,U,V,W,X,Y,Z,'@',1,2,3,4,5,6,7,8,9,m,$,'.','-',/]: R
+      
+
+    
+positions:
+  start: {x: 470.15, y: 177.41, fixed: false}
+  nazaciatok: {x: 402.71, y: 308.09, fixed: false}
+  citaj: {x: 325.04, y: 357.83}
+  mozno_A_E_F_H_I_J_L_P_R_S_U_V_W_1_2_3_4_5_@: {x: 615.64, y: 387.74, fixed: false}
+  mozno_A_J_L_P_R_W_1_@: {x: 768.08, y: 480, fixed: false}
+  mozno_L_R: {x: 672.86, y: 480, fixed: false}
+  musi_L: {x: 543.95, y: 480, fixed: false}
+  reject: {x: 780, y: 20, fixed: false}
+  mozno_P_J_W_1_@: {x: 780, y: 352.26, fixed: false}
+  mozno_p_@: {x: 706.59, y: 480, fixed: false}
+  musi_@: {x: 780, y: 480, fixed: false}
+  musi_@_zas: {x: 642.23, y: 480, fixed: false}
+  mozno_J_1: {x: 780, y: 211.76, fixed: false}
+  musi_1: {x: 780, y: 390.1, fixed: false}
+  mozno_B_C_D_G_M_N_O_Q_T_X_Y_Z_6_7_8_9_0: {x: 161.47, y: 182.92, fixed: false}
+  mozno_G_M_O_Q_Z_7_8_9_0: {x: 239.57, y: 20, fixed: false}
+  mozno_O_8_9_0: {x: 63.96, y: 20, fixed: false}
+  mozno_9_0: {x: 20, y: 204.15, fixed: false}
+  musi_0: {x: 104.28, y: 405.55, fixed: false}
+  musi_9: {x: 82.24, y: 67.3, fixed: false}
+  musi_8: {x: 20, y: 180.92, fixed: false}
+  musi_8_zas: {x: 20, y: 400.64, fixed: false}
+  mozno_G_Q_Z_7: {x: 439.66, y: 20, fixed: false}
+  musi_Q: {x: 587.11, y: 20, fixed: false}
+  mozno_Z_7: {x: 628.92, y: 20, fixed: false}
+  musi_7: {x: 763.35, y: 67.06, fixed: false}
+  mozno_B_C_D_K_N_X_Y_6: {x: 20, y: 156.33, fixed: false}
+  mozno_C_K_Y: {x: 20, y: 350.21, fixed: false}
+  musi_C: {x: 20, y: 480, fixed: false}
+  musi_Y: {x: 112.31, y: 480, fixed: false}
+  mozno_B_D_X_6: {x: 20, y: 317.44, fixed: false}
+  mozno_B_6: {x: 79.15, y: 480, fixed: false}
+  musi_X: {x: 70.52, y: 178.38, fixed: false}
+  mozno_G_M_O_Q_Z: {x: 20, y: 227.73, fixed: false}
+  musi_O: {x: 20, y: 46.31, fixed: false}
+  mozno_F_H_I_S_U_V_2_3_4_5: {x: 703.42, y: 169.06}
+  mozno_F_U_2: {x: 736.7, y: 20, fixed: false}
+  musi_2: {x: 780, y: 123.54, fixed: false}
+  musi_2_C: {x: 780, y: 283.81, fixed: false}
+  musi_F: {x: 780, y: 162.96, fixed: false}
+  mozno_H_S_V_3_4_5: {x: 538.54, y: 20, fixed: false}
+  mozno_V_3: {x: 663.25, y: 20, fixed: false}
+  mozno_H_4_5: {x: 347.37, y: 20, fixed: false}
+  musi_5: {x: 197.77, y: 20, fixed: false}
+  musi_4: {x: 169.27, y: 20, fixed: false}
+  prepis_A: {x: 575.84, y: 450.81, fixed: false}
+  prepis_B: {x: 261.07, y: 480, fixed: false}
+  prepis_C: {x: 222.23, y: 416.11, fixed: false}
+  prepis_D: {x: 197.29, y: 330.29, fixed: false}
+  prepis_E: {x: 446.94, y: 480, fixed: false}
+  prepis_F: {x: 598.49, y: 243.89, fixed: false}
+  prepis_G: {x: 381.1, y: 151.85, fixed: false}
+  prepis_H: {x: 329.86, y: 172.27, fixed: false}
+  prepis_I: {x: 557.92, y: 263.71, fixed: false}
+  prepis_J: {x: 616.62, y: 288.6, fixed: false}
+  prepis_K: {x: 206.36, y: 373.21, fixed: false}
+  prepis_L: {x: 376.83, y: 480, fixed: false}
+  prepis_M: {x: 357.88, y: 110.1, fixed: false}
+  prepis_N: {x: 192.55, y: 254.78, fixed: false}
+  prepis_O: {x: 218.42, y: 143.97, fixed: false}
+  prepis_P: {x: 524.11, y: 442.05, fixed: false}
+  prepis_Q: {x: 522.22, y: 193.18, fixed: false}
+  prepis_R: {x: 501.58, y: 480, fixed: false}
+  prepis_S: {x: 419.35, y: 105.35, fixed: false}
+  prepis_T: {x: 247.28, y: 320.83, fixed: false}
+  prepis_U: {x: 573.29, y: 147.45, fixed: false}
+  prepis_V: {x: 496.63, y: 110.53, fixed: false}
+  prepis_W: {x: 594.91, y: 355.92, fixed: false}
+  prepis_X: {x: 237.67, y: 263.11, fixed: false}
+  prepis_Y: {x: 297.5, y: 480, fixed: false}
+  prepis_Z: {x: 587.48, y: 186.05, fixed: false}
+  prepis_@: {x: 472.03, y: 480, fixed: false}
+  prepis_1: {x: 564.99, y: 398.29, fixed: false}
+  prepis_0: {x: 323.47, y: 480, fixed: false}
+  prepis_2: {x: 582.79, y: 320.16, fixed: false}
+  prepis_3: {x: 525.9, y: 141.02, fixed: false}
+  prepis_4: {x: 278.89, y: 165.98, fixed: false}
+  prepis_5: {x: 312.31, y: 127.32, fixed: false}
+  prepis_6: {x: 270.42, y: 441.01, fixed: false}
+  prepis_7: {x: 406.76, y: 480, fixed: false}
+  prepis_8: {x: 224.26, y: 450.16, fixed: false}
+  prepis_9: {x: 241.54, y: 202.32, fixed: false}
+  done: {x: 431.21, y: 148.41, fixed: false}
