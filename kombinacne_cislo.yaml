@@ -1,0 +1,108 @@
+name: kombinacne_cislo
+source code: |
+  input: '11111#'
+  blank: ' '
+  start state: start
+  table:
+    start:
+        1: {write: J, R: nakoniec}
+        #je parne
+        j: {write: J, L: prepis_prvu_jednotku}
+        
+      
+    prepis_prvu_jednotku:
+      J: L
+      ' ': {R: prepis_prvu}
+    
+    prepis_prvu:
+      J: {write: 1, R: prepis_konstantu_j}
+    
+    
+    nakoniec:
+        [1,j]: R
+        '#': {L: oznac_posledne}
+        
+    oznac_posledne:
+        j: L
+        1: {write: j, L: nazaciatok}
+        # je neparne
+        J: {R: zisti_j_ako_nasobnu_konstantu}
+      
+    nazaciatok:
+        1: L
+        J: {R: start}
+    
+    zisti_j_ako_nasobnu_konstantu:
+      j: {write: J, R: prepis_konstantu_j}
+      '#': {R: sme_na_konci_zistovania_konstanty_napis_dolar}
+      
+    prepis_konstantu_j:
+      [j,'#',1,J] : R
+      ' ': {write: 1, L: zaciatok_konstanty}
+    zaciatok_konstanty:
+        ['#',1,j] : L
+        J: {R: zisti_j_ako_nasobnu_konstantu}
+        
+    sme_na_konci_zistovania_konstanty_napis_dolar:
+        1: R
+        ' ': {write: '$', L: nasob_nazaciatok}
+        
+    nasob_nazaciatok:
+        [1,'#',J] : L
+        ' ': {R: najdi_jednotku}
+        
+    najdi_jednotku:
+      1: R
+      J: {write: 1, R: najdi_cinitela}
+      '#': {R: done}
+      
+    najdi_cinitela:
+      [J,'#']: R
+      1: {write: p, R: nasob}
+      $: {L: prepis_cinitelov}
+    
+    prepis_cinitelov:
+      ['#',J]: L
+      p: {write: 1, L}
+      1: {R: najdi_jednotku}
+      
+    
+    nasob:
+      [1,$]: R
+      ' ': {write: 1, L: najdi_p}
+
+    najdi_p:
+      [1,$]: L
+      p: {R: najdi_cinitela}
+      
+    done:
+    
+        
+      
+      
+        
+        
+    
+        
+    
+    
+      
+      
+positions:
+  start: {x: 700.75, y: 153.86}
+  prepis_prvu_jednotku: {x: 581.36, y: 259.3, fixed: false}
+  prepis_prvu: {x: 404.68, y: 326.14, fixed: false}
+  nakoniec: {x: 459.58, y: 312.41}
+  oznac_posledne: {x: 471.18, y: 479.38, fixed: false}
+  nazaciatok: {x: 540.56, y: 365.83}
+  zisti_j_ako_nasobnu_konstantu: {x: 341.06, y: 423.72, fixed: false}
+  prepis_konstantu_j: {x: 233.09, y: 340.26, fixed: false}
+  zaciatok_konstanty: {x: 205.03, y: 480, fixed: false}
+  sme_na_konci_zistovania_konstanty_napis_dolar: {x: 404.08, y: 271.16}
+  nasob_nazaciatok: {x: 480.05, y: 140.72, fixed: false}
+  najdi_jednotku: {x: 406.72, y: 20, fixed: false}
+  najdi_cinitela: {x: 255.29, y: 20, fixed: false}
+  prepis_cinitelov: {x: 323.13, y: 136.36, fixed: false}
+  nasob: {x: 111.28, y: 20, fixed: false}
+  najdi_p: {x: 168.62, y: 143.27, fixed: false}
+  done: {x: 579.83, y: 35.74}
